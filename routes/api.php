@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChauffeurController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\DemandeController;
 use Illuminate\Support\Facades\Session;
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,8 @@ Route::post('chauffeur/store', [ChauffeurController::class, 'storeapi']);
 Route::get('camions-without-chauffeur',[ChauffeurController::class, 'camionapi']);
 Route::get('chauffeur/camion/{chauffeur}',[ChauffeurController::class, 'showCamionapi']);
 Route::get('chauffeur/get/{id}',[ChauffeurController::class, 'getChauffeurapi']);
+Route::post('demande/create', [DemandeController::class, 'apiCreate']);
+Route::patch('/demandes/{demande}/chauffeur/{chauffeur}', [DemandeController::class, 'assignChauffeur']);
 
 
 ///////////

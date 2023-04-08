@@ -26,6 +26,7 @@ return new class extends Migration
                 $table->timestamps();
             });
         }
+    
         Schema::create('cars', function (Blueprint $table) {
             $table->id();
             $table->string('marque');
@@ -38,7 +39,7 @@ return new class extends Migration
             $table->foreign('client_id')->references('id')->on('clients');
             $table->timestamps();
         });
-
+    
         Schema::create('camion_remourquage', function (Blueprint $table) {
             $table->id();
             $table->string('matricule')->unique();
@@ -46,7 +47,7 @@ return new class extends Migration
             $table->string('etat');
             $table->timestamps();
         });
-
+    
         Schema::create('camion_remourquage_car', function (Blueprint $table) {
             $table->unsignedBigInteger('camion_remourquage_id');
             $table->unsignedBigInteger('car_id');
@@ -55,6 +56,7 @@ return new class extends Migration
             $table->primary(['camion_remourquage_id', 'car_id']);
             $table->timestamps();
         });
+    
         Schema::create('chauffeurs', function (Blueprint $table) {
             $table->id();
             $table->string('nom');
@@ -67,7 +69,25 @@ return new class extends Migration
             $table->foreign('camion_remourquage_id')->references('id')->on('camion_remourquage')->onDelete('cascade');
             $table->timestamps();
         });
+    
+        Schema::create('demandes', function (Blueprint $table) {
+            $table->id();
+            $table->integer('nbr_personne');
+            $table->string('type_veh');
+            $table->string('nom');
+            $table->date('date');
+            $table->unsignedBigInteger('client_id');
+            $table->unsignedBigInteger('car_id')->nullable();
+            $table->foreign('client_id')->references('id')->on('clients');
+            $table->foreign('car_id')->references('id')->on('cars')->nullable();
+            $table->unsignedBigInteger('chauffeur_id')->nullable();
+            $table->foreign('chauffeur_id')->references('id')->on('chauffeurs')->nullable();
+            $table->timestamps();
+        });
+        
+        
     }
+    
 
     /**
      * Reverse the migrations.
@@ -84,6 +104,11 @@ return new class extends Migration
         Schema::dropIfExists('camion_remourquage');
         Schema::dropIfExists('camion_remourquage_car');
         Schema::dropIfExists('chauffeurs');
+        Schema::table('demandes', function (Blueprint $table) {
+            $table->dropForeign(['client_id']);
+            $table->dropForeign(['chauffeur_id']);
+        });
+        Schema::dropIfExists('demandes');
 
 
     }

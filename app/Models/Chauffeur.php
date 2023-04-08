@@ -21,4 +21,8 @@ class Chauffeur extends Model
 {
     return $this->is_chauffeur;
 }
+public function demandes()
+{
+    return $this->hasMany(Demande::class);
+}
 }
