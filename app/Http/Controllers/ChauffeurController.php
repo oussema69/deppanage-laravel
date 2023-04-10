@@ -225,8 +225,32 @@ public function storeapi(Request $request)
 
         return response()->json($chauffeur, 200);
     }
+    public function indexWithCondition()
+    {
+        $chauffeurs = Chauffeur::where('condition', 'true')->get();
+        return view('demandes.condition', compact('chauffeurs'));
+    }
 
+    public function auth(Request $request)
+    {
+        $email = $request->input('email');
+        $password = $request->input('password');
 
+        $chauffeur = Chauffeur::where('email', $email)->first();
+
+        if ($chauffeur && Hash::check($password, $chauffeur->password)) {
+            $token = $chauffeur->createToken('access_token')->accessToken;
+            return response()->json([
+                'message' => 'Authentication successful',
+                'chauffeur' => $chauffeur,
+                'access_token' => $token
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Invalid credentials'
+            ], 401);
+        }
+    }
 
 
 }

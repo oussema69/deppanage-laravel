@@ -34,23 +34,66 @@ class DemandeController extends Controller
         ]);
     }
 
+
     public function assignChauffeur(Request $request, Demande $demande, Chauffeur $chauffeur)
     {
         $demande->chauffeur_id = $chauffeur->id;
         $demande->save();
-    
-    
+
+
         $camionRemourquageCar = new CamionRemourquageCar();
         $camionRemourquageCar->camion_remourquage_id = $chauffeur->camion_remourquage_id; // use camionRemourquage_id from chauffeur
         $camionRemourquageCar->car_id = $demande->car_id;
         $camionRemourquageCar->save();
-    
+
         return response()->json([
             'message' => 'Chauffeur assigned to demande successfully.'
         ]);
     }
-    
-    
+  public function index()
+    {
+        $demandes = Demande::all();
+        return view('demandes.index', compact('demandes'));
+    }
+  public function destroy(Demande $demande)
+    {
+        $demande->delete();
+        return redirect()->route('demandes.index')->with('success', 'Demande has been deleted successfully');
+    }
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        $demandes = Demande::where('nom', 'LIKE', '%' . $search . '%')
+                        ->orWhere('nbr_personne', 'LIKE', '%' . $search . '%')
+                        ->orWhere('type_veh', 'LIKE', '%' . $search . '%')
+                        ->orWhere('date', 'LIKE', '%' . $search . '%')
+                        ->orWhereHas('client', function ($query) use ($search) {
+                            $query->where('nom', 'LIKE', '%' . $search . '%');
+                        })
+                        ->orWhereHas('chauffeur', function ($query) use ($search) {
+                            $query->where('nom', 'LIKE', '%' . $search . '%');
+                        })
+                        ->orWhereHas('car', function ($query) use ($search) {
+                            $query->where('nom', 'LIKE', '%' . $search . '%');
+                        })
+                        ->get();
+
+        return view('demandes.index', compact('demandes','search'));
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 }

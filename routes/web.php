@@ -5,6 +5,8 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\TruckController;
 use App\Http\Controllers\ChauffeurController;
+use App\Http\Controllers\DemandeController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +63,13 @@ Route::middleware(['web'])->group(function () {
     Route::get('/chauffeurs', [ChauffeurController::class, 'indexs'])->name('chauffeurs.index');
     Route::get('/chauffeurs/{chauffeur}/camion', [ChauffeurController::class, 'showCamion'])->name('chauffeurs.showCamion');
     Route::post('/create', [ChauffeurController::class, 'store'])->name('chauffeurs.store');
+    Route::get('/demandes', [DemandeController::class, 'index'])->name('demandes.index');
+   // Route::get('/demandes/{demande}', [DemandeController::class, 'show'])->name('demandes.show');
+   Route::delete('demandes/{demande}',  [DemandeController::class, 'destroy'])->name('demandes.destroy');
+   Route::get('/chauffeurs/demande/with-condition', [ChauffeurController::class, 'indexWithCondition'])->name('chauffeurs.with-condition');
+   Route::get('/demandes/search', [DemandeController::class, 'search'])->name('demandes.search');
+
+
 
    /*
     Route::get('/trucks/{truck}', [TruckController::class, 'show'])->name('trucks.show');

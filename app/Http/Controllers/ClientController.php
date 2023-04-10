@@ -5,6 +5,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Client;
+use Illuminate\Support\Facades\Auth;
 
 class ClientController extends Controller
 {
@@ -209,5 +210,25 @@ public function showCarsapi($id)
 
         return redirect('/clients')->with('success', 'Client has been deleted Successfully');
     }
+    public function auth(Request $request)
+    {
+        $email = $request->input('email');
+        $password = $request->input('password');
+
+        $client = Client::where('email', $email)->first();
+
+        if ($client && Hash::check($password, $client->password)) {
+            return response()->json([
+                'message' => 'Authentication successful',
+                'client' => $client
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'Invalida credentials'
+            ], 401);
+        }
+    }
+
+
 }
 

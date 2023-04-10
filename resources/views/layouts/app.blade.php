@@ -85,7 +85,7 @@
                             class="fas fa-users fa-fw me-3"></i><span>Drivers</span></a>
                             <a href="{{ route('trucks.view') }}" class="list-group-item list-group-item-action py-2 ripple"><i
                                 class="fas fa-car fa-fw me-3"></i><span>Trucks</span></a>
-                                 <a href="{{ route('trucks.view') }}" class="list-group-item list-group-item-action py-2 ripple"><i
+                                 <a href="{{ route('demandes.index') }}" class="list-group-item list-group-item-action py-2 ripple"><i
                                 class="fas fa-car fa-fw me-3"></i><span>Demande</span></a>
                 </div>
             </div>

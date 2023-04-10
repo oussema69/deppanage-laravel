@@ -25,4 +25,8 @@ public function demandes()
 {
     return $this->hasMany(Demande::class);
 }
+public static function getConditionChauffeurs()
+{
+    return static::where('condition', true)->get();
+}
 }
