@@ -40,11 +40,16 @@
     </div>
     <div class="form-group">
         <label for="condition">Condition</label>
-        <input type="text" name="condition" class="form-control @error('condition') is-invalid @enderror" id="condition"  required>
+        <select name="condition" class="form-control @error('condition') is-invalid @enderror" id="condition" required>
+            <option value="">Select a Condition</option>
+            <option value="Occupé" @if (old('condition') == 'Occupé') selected @endif>Occupé</option>
+            <option value="Non occupé" @if (old('condition') == 'Non occupé') selected @endif>Non occupé</option>
+        </select>
         @error('condition')
             <div class="invalid-feedback">{{ $message }}</div>
         @enderror
     </div>
+
     <div class="form-group">
         <label for="camion_remourquage_id">Camion Remaurquage</label>
         <select name="camion_remourquage_id" class="form-control @error('camion_remourquage_id') is-invalid @enderror" id="camion_remourquage_id" required>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use App\Models\Administrateur; 
 
 use App\Models\Chauffeur;
 use App\Models\CamionRemourquage;
@@ -25,7 +26,8 @@ class ChauffeurController extends Controller
     $camions = CamionRemourquage::whereNotIn('id', function($query) {
         $query->select('camion_remourquage_id')
               ->from('chauffeurs');
-    })->get();
+    })->whereIn('etat', ['disponible', 'non disponible'])->orWhereNull('etat')->get();
+
     return view('chauffeurs.create', compact('camions'));
 }
 public function camionapi()
@@ -33,7 +35,8 @@ public function camionapi()
     $camions = CamionRemourquage::whereNotIn('id', function($query) {
         $query->select('camion_remourquage_id')
               ->from('chauffeurs');
-    })->get();
+    })->whereIn('etat', ['disponible', 'non disponible'])->orWhereNull('etat')->get();
+
 
     return response()->json([
         'camions' => $camions
@@ -120,27 +123,60 @@ public function storeapi(Request $request)
         return view('chauffeurs.show', compact('chauffeur'));
     }
 
+
     public function edit(Chauffeur $chauffeur)
-    {
-        return view('chauffeurs.edit', compact('chauffeur'));
+{
+    $camions = CamionRemourquage::whereNotIn('id', function($query) {
+        $query->select('camion_remourquage_id')
+              ->from('chauffeurs');
+    })->whereIn('etat', ['disponible', 'non disponible'])->orWhereNull('etat')->get();
+
+    return view('chauffeurs.edit', compact('chauffeur', 'camions'));
+}
+
+
+public function update(Request $request, $id)
+{
+    $request->validate([
+        'nom' => 'required',
+        'prenom' => 'required',
+        'email' => 'required|email|unique:chauffeurs,email,'.$id,
+        'password' => 'nullable',
+        'tel' => 'required',
+        'condition' => 'required',
+        'camion_remourquage_id' => 'nullable|exists:camion_remourquage,id'
+    ]);
+
+
+    $chauffeur = Chauffeur::findOrFail($id);
+    $chauffeur->nom = $request->nom;
+    $chauffeur->prenom = $request->prenom;
+    $chauffeur->email = $request->email;
+    if (!empty($request->password)) {
+        $chauffeur->password = Hash::make($request->password);
+    }
+    $chauffeur->tel = $request->tel;
+    $chauffeur->condition = $request->condition;
+
+
+    if (!empty($request->camion_remourquage_id)) {
+        $chauffeur->camion_remourquage_id = $request->camion_remourquage_id;
     }
 
-    public function update(Request $request, Chauffeur $chauffeur)
-    {
-        $validatedData = $request->validate([
-            'nom' => 'required',
-            'prenom' => 'required',
-            'email' => 'required|unique:chauffeurs,email,' . $chauffeur->id,
-            'password' => 'required',
-            'tel' => 'required|digits:8',
-            'condition' => 'required',
-        ]);
 
-        $chauffeur->update($validatedData);
+    $chauffeur->save();
 
-        return redirect()->route('chauffeurs.index')
-            ->with('success', 'Chauffeur updated successfully.');
-    }
+    // Define or initialize $camions variable
+    $camions = CamionRemourquage::whereNotIn('id', function($query) {
+        $query->select('camion_remourquage_id')
+              ->from('chauffeurs');
+    })->whereIn('etat', ['disponible', 'non disponible'])->orWhereNull('etat')->get();
+
+    return view('chauffeurs.edit', compact('chauffeur', 'camions'))->with('success', 'Chauffeur updated successfully');
+}
+
+
+
     public function updateapi(Request $request, $id)
     {
         try {
@@ -225,10 +261,16 @@ public function storeapi(Request $request)
 
         return response()->json($chauffeur, 200);
     }
-    public function indexWithCondition()
+    public function indexWithCondition($id)
     {
-        $chauffeurs = Chauffeur::where('condition', 'true')->get();
-        return view('demandes.condition', compact('chauffeurs'));
+
+        $chauffeurs = Chauffeur::where('condition', 'non occupé')->get();
+        $camions_remorquages = CamionRemourquage::whereNotIn('id', function($query) {
+            $query->select('camion_remourquage_id')
+                  ->from('chauffeurs');
+        })->whereIn('etat', ['disponible'])->get();
+
+        return view('demandes.condition', compact('chauffeurs', 'camions_remorquages'));
     }
 
     public function auth(Request $request)
@@ -251,6 +293,24 @@ public function storeapi(Request $request)
             ], 401);
         }
     }
+    public function authAdmin(Request $request)
+    {
+        $email = $request->input('email');
+        $password = $request->input('password');
+    
+        $administrateur = Administrateur::where('email', $email)->first();
+    
+        if ($administrateur && $password === $administrateur->password) {
+            // Authentication successful
+            // Perform actions here for authenticated Administrateur
+            return redirect()->route('clients.index'); // Example: Redirect to dashboard
+        } else {
+            // Invalid credentials
+            // Perform actions here for failed authentication
+            return redirect()->back()->withErrors(['error' => 'Invalid credentials']); // Example: Redirect back with error message
+        }
+    }
+    
 
 
 }

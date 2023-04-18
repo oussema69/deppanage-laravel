@@ -66,8 +66,10 @@ Route::middleware(['web'])->group(function () {
     Route::get('/demandes', [DemandeController::class, 'index'])->name('demandes.index');
    // Route::get('/demandes/{demande}', [DemandeController::class, 'show'])->name('demandes.show');
    Route::delete('demandes/{demande}',  [DemandeController::class, 'destroy'])->name('demandes.destroy');
-   Route::get('/chauffeurs/demande/with-condition', [ChauffeurController::class, 'indexWithCondition'])->name('chauffeurs.with-condition');
+   Route::get('/chauffeurs/demande/{id}/with-condition/', [ChauffeurController::class, 'indexWithCondition'])->name('chauffeurs.with-condition');
    Route::get('/demandes/search', [DemandeController::class, 'search'])->name('demandes.search');
+   Route::post('/chauffeurs/demandes/{demande}/assign/{chauffeur_id}', [DemandeController::class, 'assignChauffeur'])->name('demandes.assign');
+   Route::post('/login', [ChauffeurController::class, 'authAdmin'])->name('login');
 
 
 

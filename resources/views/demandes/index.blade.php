@@ -25,6 +25,7 @@
                 <th>Date</th>
                 <th>Type de véhicule</th>
                 <th>Nombre de personnes</th>
+                <th>tel</th>
                 <th>Client</th>
                 <th>Voiture</th>
                 <th>Chauffeur</th>
@@ -41,6 +42,7 @@
                     <td>{{ $demande->date }}</td>
                     <td>{{ $demande->type_veh }}</td>
                     <td>{{ $demande->nbr_personne }}</td>
+                    <td>{{ $demande->nbr_personne }}</td>
                     <td>{{ $demande->client->nom }}</td>
                     <td>{{ $demande->car ? $demande->car->marque .' '. $demande->car->modele .' ('. $demande->car->matricule .')' : '-' }}</td>
                     <td>{{ $demande->chauffeur ? $demande->chauffeur->nom .' '. $demande->chauffeur->prenom .' ('. $demande->chauffeur->tel .')' : '-' }}</td>
@@ -53,7 +55,7 @@
                         </form>
                         @if ($demande->chauffeur === null)
 
-                        <a href="{{ route('chauffeurs.with-condition') }}" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">affecter</a>
+                        <a href="{{ route('chauffeurs.with-condition', $demande->id) }}" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">affecter</a>
                         @endif
                     </td>
 

@@ -14,6 +14,7 @@ class Demande extends Model
         'type_veh',
         'nom',
         'date',
+        'tel',
         'client_id',
         'chauffeur_id',
         'car_id',

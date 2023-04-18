@@ -49,8 +49,10 @@ return new class extends Migration
         });
 
         Schema::create('camion_remourquage_car', function (Blueprint $table) {
+
             $table->unsignedBigInteger('camion_remourquage_id');
             $table->unsignedBigInteger('car_id');
+            $table->unsignedInteger('occurrence')->default(0); // Add the 'occurrence' column with a default value of 1
             $table->foreign('camion_remourquage_id')->references('id')->on('camion_remourquage')->onDelete('cascade');
             $table->foreign('car_id')->references('id')->on('cars')->onDelete('cascade');
             $table->primary(['camion_remourquage_id', 'car_id']);
@@ -76,12 +78,21 @@ return new class extends Migration
             $table->string('type_veh');
             $table->string('nom');
             $table->date('date');
+            $table->integer('tel');
             $table->unsignedBigInteger('client_id');
             $table->unsignedBigInteger('car_id')->nullable();
             $table->foreign('client_id')->references('id')->on('clients');
             $table->foreign('car_id')->references('id')->on('cars')->nullable();
             $table->unsignedBigInteger('chauffeur_id')->nullable();
             $table->foreign('chauffeur_id')->references('id')->on('chauffeurs')->nullable();
+            $table->timestamps();
+        });
+        Schema::create('administrateurs', function (Blueprint $table) {
+            $table->id();
+            $table->string('nom');
+            $table->string('prenom');
+            $table->string('email')->unique();
+            $table->string('password');
             $table->timestamps();
         });
 

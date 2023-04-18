@@ -20,6 +20,7 @@ class DemandeController extends Controller
             'type_veh' => 'required|string',
             'nom' => 'required|string',
             'date' => 'required|date',
+            'tel' => 'required|integer',
             'client_id' => 'required|exists:clients,id',
             'chauffeur_id' => 'nullable|exists:chauffeurs,id',
             'car_id' => 'nullable|exists:cars,id'
@@ -35,21 +36,45 @@ class DemandeController extends Controller
     }
 
 
-    public function assignChauffeur(Request $request, Demande $demande, Chauffeur $chauffeur)
+    public function assignChauffeur(Request $request, $demande, $chauffeur_id)
     {
+        // Retrieve the demande and chauffeur based on the $demande and $chauffeur_id parameters
+        $demande = Demande::findOrFail($demande);
+        $chauffeur = Chauffeur::findOrFail($chauffeur_id);
+    
+        // Update the demande with the assigned chauffeur
         $demande->chauffeur_id = $chauffeur->id;
         $demande->save();
-
-
-        $camionRemourquageCar = new CamionRemourquageCar();
-        $camionRemourquageCar->camion_remourquage_id = $chauffeur->camion_remourquage_id; // use camionRemourquage_id from chauffeur
-        $camionRemourquageCar->car_id = $demande->car_id;
-        $camionRemourquageCar->save();
-
-        return response()->json([
-            'message' => 'Chauffeur assigned to demande successfully.'
-        ]);
+    
+        // Check if there is an existing CamionRemourquageCar entry with the same camion_remourquage_id and car_id
+        $existingCamionRemourquageCar = CamionRemourquageCar::where('camion_remourquage_id', $chauffeur->camion_remourquage_id)
+            ->where('car_id', $demande->car_id)
+            ->first();
+            
+    
+        if ($existingCamionRemourquageCar) {
+            // If an existing entry is found, increment the occurrence column by 1
+            
+           // $existingCamionRemourquageCar->incrementOccurrence();
+            $existingCamionRemourquageCar->save();
+        } else {
+            // If no existing entry is found, create a new entry with occurrence set to 1
+            $camionRemourquageCar = new CamionRemourquageCar();
+            $camionRemourquageCar->camion_remourquage_id = $chauffeur->camion_remourquage_id;
+            $camionRemourquageCar->car_id = $demande->car_id;
+            $camionRemourquageCar->occurrence = 1;
+            $camionRemourquageCar->save();
+        }
+    
+        // Return a redirect with flashed message
+        return redirect()->route('demandes.index')->with('message', 'Chauffeur assigned to demande successfully.');
     }
+    
+    
+    
+    
+    
+    
   public function index()
     {
         $demandes = Demande::all();

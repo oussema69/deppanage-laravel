@@ -15,6 +15,7 @@ class CamionRemourquageCar extends Model
         'camion_remourquage_id',
         'car_id',
         'etat',
+        'occurrence',
     ];
 
     public function camionRemourquage()
@@ -26,8 +27,16 @@ class CamionRemourquageCar extends Model
     {
         return $this->belongsTo(Car::class);
     }
+
     public static function getCarsByTruckId($id)
     {
         return self::where('camion_remourquage_id', $id)->with('car')->get()->pluck('car');
+    }
+
+    public function incrementOccurrence()
+    {
+        $this->occurrence = $this->occurrence + 1;
+        $this->save();
+
     }
 }

@@ -18,7 +18,11 @@
                     </div>
                     <div class="form-group">
                         <label for="etat">Etat</label>
-                        <input type="text" class="form-control" id="etat" name="etat" value="{{ $truck->etat }}">
+                        <select class="form-control" id="etat" name="etat">
+                            <option value="non disponible" {{ $truck->etat == 'non disponible' ? 'selected' : '' }}>Non Disponible</option>
+                            <option value="disponible" {{ $truck->etat == 'disponible' ? 'selected' : '' }}>Disponible</option>
+                            <option value="panne" {{ $truck->etat == 'panne' ? 'selected' : '' }}>Panne</option>
+                        </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Update Truck</button>
                     <div id="message"></div>

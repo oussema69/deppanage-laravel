@@ -19,10 +19,16 @@
                 <label for="model">Model:</label>
                 <input type="text" class="form-control" name="model" id="model" required>
             </div>
-
             <div class="form-group">
                 <label for="etat">Etat:</label>
-                <input type="text" class="form-control" name="etat" id="etat" required>
+                <select class="form-control" name="etat" id="etat" required>
+                    <option value="non disponible">Non Disponible</option>
+                    <option value="disponible">Disponible</option>
+                    <option value="panne">Panne</option>
+                </select>
+                @if($errors->has('etat'))
+                    <div class="text-danger">{{ $errors->first('etat') }}</div>
+                @endif
             </div>
 
             <button type="submit" class="btn btn-primary">Create</button>

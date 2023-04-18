@@ -11,8 +11,8 @@ class Chauffeur extends Model
 {
     use HasFactory, Notifiable, HasApiTokens;
 
-    protected $fillable = ['nom', 'prenom', 'email', 'password', 'tel', 'condition'];
-
+    protected $fillable = ['nom', 'prenom', 'email', 'password', 'tel', 'condition','camion_remorquage_id'];
+  
     public function camionRemourquage()
     {
         return $this->hasOne(CamionRemourquage::class);

@@ -45,8 +45,30 @@
 
             <div class="form-group">
                 <label for="condition">Condition:</label>
-                <input type="text" class="form-control" id="condition" name="condition" value="{{ old('condition', $chauffeur->condition) }}">
+                <select class="form-control" id="condition" name="condition">
+                    <option value="">Select a Condition</option>
+                    <option value="Occupé" {{ old('condition', $chauffeur->condition) == 'Occupé' ? 'selected' : '' }}>Occupé</option>
+                    <option value="Non occupé" {{ old('condition', $chauffeur->condition) == 'Non occupé' ? 'selected' : '' }}>Non occupé</option>
+                </select>
             </div>
+            
+
+            <div class="form-group">
+                <label for="camion_remourquage_id">Camion Remorquage:</label>
+                <select class="form-control" id="camion_remourquage_id" name="camion_remourquage_id">
+                    <option value="">Select a Camion</option>
+                    @foreach($camions as $camion)
+                        @if($camion->etat == 'disponible' || $camion->etat == 'non disponible')
+                            <option value="{{ $camion->id }}" {{ old('camion_remourquage_id', $chauffeur->camion_remourquage_id) == $camion->id ? 'selected' : '' }}>
+                                {{ $camion->matricule }}
+                            </option>
+                        @endif
+                    @endforeach
+                </select>
+            </div>
+            
+
+            
 
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>

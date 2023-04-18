@@ -56,6 +56,13 @@
                         <td>     <a href="{{ route('chauffeurs.showCamion', $chauffeur->camion_remourquage_id) }}" class="btn btn-info">
                             <i class="fa-sharp fa-solid fa-truck"></i>
                         </a></td>
+                        <td>
+                            <form action="{{ route('demandes.assign', ['demande' => request()->route('id'), 'chauffeur_id' => $chauffeur->id]) }}" method="post">
+                                {{ csrf_field() }}
+                                <button type="submit">Assign Chauffeur</button>
+                            </form>
+                            
+                        </td>
 
                     </tr>
                 @endforeach
