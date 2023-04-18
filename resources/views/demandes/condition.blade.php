@@ -29,6 +29,8 @@
                     <th>Condition</th>
                     <th>Actions</th>
                     <th>Truck</th>
+                    <th>affectation</th>
+
 
 
                 </tr>
@@ -57,9 +59,11 @@
                             <i class="fa-sharp fa-solid fa-truck"></i>
                         </a></td>
                         <td>
-                            <form action="{{ route('demandes.assign', ['demande' => request()->route('id'), 'chauffeur_id' => $chauffeur->id]) }}" method="post">
+                            <form action="{{ route('demandes.assign', ['demande' => request()->route('id'), 'chauffeur_id' => $chauffeur->id]) }}" method="post"  style="display: inline-block;">
                                 {{ csrf_field() }}
-                                <button type="submit">Assign Chauffeur</button>
+                                <button type="submit" class="btn btn-success"><i class="fa-sharp fa-solid fa-check"></i></button>
+
+
                             </form>
                             
                         </td>

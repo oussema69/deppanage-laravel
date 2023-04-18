@@ -45,7 +45,7 @@ class DemandeController extends Controller
         // Update the demande with the assigned chauffeur
         $demande->chauffeur_id = $chauffeur->id;
         $demande->save();
-    
+
         // Check if there is an existing CamionRemourquageCar entry with the same camion_remourquage_id and car_id
         $existingCamionRemourquageCar = CamionRemourquageCar::where('camion_remourquage_id', $chauffeur->camion_remourquage_id)
             ->where('car_id', $demande->car_id)
@@ -53,10 +53,9 @@ class DemandeController extends Controller
             
     
         if ($existingCamionRemourquageCar) {
-            // If an existing entry is found, increment the occurrence column by 1
             
-           // $existingCamionRemourquageCar->incrementOccurrence();
-            $existingCamionRemourquageCar->save();
+            $existingCamionRemourquageCar->incrementOccurrence();
+           // $existingCamionRemourquageCar->save();
         } else {
             // If no existing entry is found, create a new entry with occurrence set to 1
             $camionRemourquageCar = new CamionRemourquageCar();
