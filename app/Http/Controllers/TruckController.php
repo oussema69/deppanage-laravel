@@ -14,10 +14,11 @@ class TruckController extends Controller
 {
     public function index(Car $car)
     {
-        $trucks = $car->camionRemourquage()->get();
+        $trucks = $car->camionRemourquage()->withPivot('date')->get();
+    
         return view('trucks.index', [
             'car' => $car,
-            'trucks' => $trucks
+            'trucks' => $trucks,
         ]);
     }
     public function show(CamionRemourquage $truck)
@@ -86,7 +87,6 @@ public function showCars($id)
 {
     $truck = CamionRemourquage::findOrFail($id);
     $cars = CamionRemourquageCar::getCarsByTruckId($id);
-
     return view('trucks.cars', compact('cars', 'truck'));
 }
 public function search(Request $request)

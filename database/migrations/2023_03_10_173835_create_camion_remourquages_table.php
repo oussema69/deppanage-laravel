@@ -47,17 +47,17 @@ return new class extends Migration
             $table->string('etat');
             $table->timestamps();
         });
+    
 
         Schema::create('camion_remourquage_car', function (Blueprint $table) {
-
             $table->unsignedBigInteger('camion_remourquage_id');
             $table->unsignedBigInteger('car_id');
-            $table->unsignedInteger('occurrence')->default(0); // Add the 'occurrence' column with a default value of 1
+            $table->dateTime('date');
             $table->foreign('camion_remourquage_id')->references('id')->on('camion_remourquage')->onDelete('cascade');
             $table->foreign('car_id')->references('id')->on('cars')->onDelete('cascade');
-            $table->primary(['camion_remourquage_id', 'car_id']);
             $table->timestamps();
         });
+        
 
         Schema::create('chauffeurs', function (Blueprint $table) {
             $table->id();

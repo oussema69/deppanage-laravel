@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Demande;
 use App\Models\Chauffeur;
 use App\Models\CamionRemourquageCar;
-use App\Models\CamionRemourquage;
+use App\Models\Car;
 
 
 
@@ -25,18 +25,30 @@ class DemandeController extends Controller
             'chauffeur_id' => 'nullable|exists:chauffeurs,id',
             'car_id' => 'nullable|exists:cars,id'
         ]);
+        $carId = $validatedData['car_id'];
 
-        $demande = new Demande($validatedData);
-        $demande->save();
-
-        return response()->json([
-            'message' => 'Demande created successfully',
-            'demande' => $demande
-        ]);
+        // Check the length of related CamionRemourquageCar instances for the given car_id
+        $camionRemourquageCarsCount = CamionRemourquageCar::where('car_id', $carId)->count();
+    
+        // If the count is greater than or equal to 3, return an error message
+        if ($camionRemourquageCarsCount >= 3) {
+            return response()->json([
+                'message' => 'Cannot create demande.you have maximum 3 demandes for car.'
+            ], 422);
+        }else{
+            $demande = new Demande($validatedData);
+            $demande->save();
+    
+            return response()->json([
+                'message' => 'Demande created successfully',
+                'demande' => $demande
+            ]);
+        }
+     
     }
 
 
-    public function assignChauffeur(Request $request, $demande, $chauffeur_id)
+    public function assignChauffeur( $demande, $chauffeur_id)
     {
         // Retrieve the demande and chauffeur based on the $demande and $chauffeur_id parameters
         $demande = Demande::findOrFail($demande);
@@ -45,25 +57,13 @@ class DemandeController extends Controller
         // Update the demande with the assigned chauffeur
         $demande->chauffeur_id = $chauffeur->id;
         $demande->save();
+        $camionRemourquageCar = new CamionRemourquageCar();
+        $camionRemourquageCar->camion_remourquage_id = $chauffeur->camion_remourquage_id;
+        $camionRemourquageCar->car_id = $demande->car_id;
+        $camionRemourquageCar->date =now()->format('Y-m-d H:i:s');
 
-        // Check if there is an existing CamionRemourquageCar entry with the same camion_remourquage_id and car_id
-        $existingCamionRemourquageCar = CamionRemourquageCar::where('camion_remourquage_id', $chauffeur->camion_remourquage_id)
-            ->where('car_id', $demande->car_id)
-            ->first();
-            
-    
-        if ($existingCamionRemourquageCar) {
-            
-            $existingCamionRemourquageCar->incrementOccurrence();
-           // $existingCamionRemourquageCar->save();
-        } else {
-            // If no existing entry is found, create a new entry with occurrence set to 1
-            $camionRemourquageCar = new CamionRemourquageCar();
-            $camionRemourquageCar->camion_remourquage_id = $chauffeur->camion_remourquage_id;
-            $camionRemourquageCar->car_id = $demande->car_id;
-            $camionRemourquageCar->occurrence = 1;
-            $camionRemourquageCar->save();
-        }
+        $camionRemourquageCar->save();
+        
     
         // Return a redirect with flashed message
         return redirect()->route('demandes.index')->with('message', 'Chauffeur assigned to demande successfully.');

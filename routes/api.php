@@ -34,6 +34,7 @@ Route::post('demande/create', [DemandeController::class, 'apiCreate']);
 Route::patch('/demandes/{demande}/chauffeur/{chauffeur}', [DemandeController::class, 'assignChauffeur']);
 Route::post('clients/auth', [ClientController::class, 'auth']);
 Route::post('chauffeur/auth', [ChauffeurController::class, 'auth']);
+Route::put('/chauffeurs/{id}/condition', [ChauffeurController::class, 'updateCondition']);
 
 
 

@@ -28,6 +28,8 @@
                 <td>{{ $car->num_assurance }}</td>
                 <td>{{ $car->date_payment_assurance }}</td>
                 <td>{{ $car->date_fin }}</td>
+
+
                 <td style="width: 200px">
                     <a href="{{ route('cars.show', $car->id) }}" class="btn btn-primary"><i class="fa-sharp fa-solid fa-car"></i></a>
 

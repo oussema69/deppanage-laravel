@@ -310,7 +310,26 @@ public function update(Request $request, $id)
             return redirect()->back()->withErrors(['error' => 'Invalid credentials']); // Example: Redirect back with error message
         }
     }
-    
+    public function updateCondition(Request $request, $id)
+    {
+        // Validate the request data
+        $request->validate([
+            'condition' => 'required|string' // Add any validation rules as needed
+        ]);
+
+        // Find the chauffeur by ID
+        $chauffeur = Chauffeur::find($id);
+
+        if (!$chauffeur) {
+            return response()->json(['error' => 'Chauffeur not found'], 404);
+        }
+
+        // Update the chauffeur's condition
+        $chauffeur->condition = $request->input('condition');
+        $chauffeur->save();
+
+        return response()->json(['message' => 'Chauffeur condition updated successfully']);
+    }
 
 
 }

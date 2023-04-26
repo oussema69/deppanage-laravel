@@ -28,6 +28,7 @@ class Car extends Model
     {
         return $this->belongsToMany(CamionRemourquage::class);
     }
+    
 
 
 }

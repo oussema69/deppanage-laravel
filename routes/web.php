@@ -6,6 +6,8 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\TruckController;
 use App\Http\Controllers\ChauffeurController;
 use App\Http\Controllers\DemandeController;
+use App\Http\Controllers\DashboardController;
+
 
 
 /*
@@ -70,6 +72,7 @@ Route::middleware(['web'])->group(function () {
    Route::get('/demandes/search', [DemandeController::class, 'search'])->name('demandes.search');
    Route::post('/chauffeurs/demandes/{demande}/assign/{chauffeur_id}', [DemandeController::class, 'assignChauffeur'])->name('demandes.assign');
    Route::post('/login', [ChauffeurController::class, 'authAdmin'])->name('login');
+   Route::get('/dashboard', [DashboardController::class, 'index'])->name('dash');
 
 
 
