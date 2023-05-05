@@ -18,6 +18,9 @@ class Demande extends Model
         'client_id',
         'chauffeur_id',
         'car_id',
+        'longitude',
+        'latitude',
+         'isValid'
     ];
 
     public function client()
@@ -32,5 +35,9 @@ class Demande extends Model
     public function car()
     {
         return $this->belongsTo(Car::class);
+    }
+    public function scopeNotValid($query)
+    {
+        return $query->where('isValid', false);
     }
 }

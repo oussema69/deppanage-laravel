@@ -35,12 +35,9 @@ Route::patch('/demandes/{demande}/chauffeur/{chauffeur}', [DemandeController::cl
 Route::post('clients/auth', [ClientController::class, 'auth']);
 Route::post('chauffeur/auth', [ChauffeurController::class, 'auth']);
 Route::put('/chauffeurs/{id}/condition', [ChauffeurController::class, 'updateCondition']);
-
-
-
+Route::put('/demandes/{id}/updateIsValid', [DemandeController::class, 'apiUpdateIsValid']);
 ///////////
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/chauffeur/login', [AuthController::class, 'login']);
-
-
+Route::get('demandes/role/{id}/{type}',[DemandeController::class, 'getDemandesByRole'] );
 

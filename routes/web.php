@@ -73,7 +73,7 @@ Route::middleware(['web'])->group(function () {
    Route::post('/chauffeurs/demandes/{demande}/assign/{chauffeur_id}', [DemandeController::class, 'assignChauffeur'])->name('demandes.assign');
    Route::post('/login', [ChauffeurController::class, 'authAdmin'])->name('login');
    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dash');
-
+   Route::get('/demandesNot', [DemandeController::class, 'traitedDemande'])->name('demandes.demande');
 
 
    /*

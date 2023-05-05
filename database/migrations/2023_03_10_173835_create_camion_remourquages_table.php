@@ -47,7 +47,7 @@ return new class extends Migration
             $table->string('etat');
             $table->timestamps();
         });
-    
+
 
         Schema::create('camion_remourquage_car', function (Blueprint $table) {
             $table->unsignedBigInteger('camion_remourquage_id');
@@ -57,7 +57,7 @@ return new class extends Migration
             $table->foreign('car_id')->references('id')->on('cars')->onDelete('cascade');
             $table->timestamps();
         });
-        
+
 
         Schema::create('chauffeurs', function (Blueprint $table) {
             $table->id();
@@ -79,6 +79,9 @@ return new class extends Migration
             $table->string('nom');
             $table->date('date');
             $table->integer('tel');
+            $table->double('longitude');
+            $table->double('latitude');
+            $table->boolean('isValid')->default(false);
             $table->unsignedBigInteger('client_id');
             $table->unsignedBigInteger('car_id')->nullable();
             $table->foreign('client_id')->references('id')->on('clients');
@@ -120,7 +123,9 @@ return new class extends Migration
             $table->dropForeign(['chauffeur_id']);
         });
         Schema::dropIfExists('demandes');
-
+        Schema::table('demandes', function (Blueprint $table) {
+            $table->dropColumn(['longitude', 'latitude', 'isValid']);
+        });
 
 
     }

@@ -2,7 +2,7 @@
 
 @section('content')
 <nav class="navbar navbar-expand-lg navbar-primary bg-primary mb-3" style="margin-top: -38px">
-    <a class="navbar-brand" ><span class='text-center' style="color:aliceblue;margin-left:70px"><i class="fa-solid fa-users"></i>Demandes Traité</span></a>
+    <a class="navbar-brand" ><span class='text-center' style="color:aliceblue;margin-left:70px"><i class="fa-solid fa-users"></i>Demandes Non Traité</span></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>

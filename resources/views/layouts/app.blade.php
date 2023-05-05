@@ -82,16 +82,18 @@
                     <a href="{{ route('clients.index') }}" class="list-group-item list-group-item-action py-2 ripple"><i
                             class="fas fa-users fa-fw me-3"></i><span>Clients</span></a>
                             <a href="{{ route('chauffeurs.index') }}" class="list-group-item list-group-item-action py-2 ripple"><i
-                            class="fas fa-users fa-fw me-3"></i><span>Drivers</span></a>
+                            class="fas fa-users fa-fw me-3"></i><span>Chauffeur</span></a>
                             <a href="{{ route('trucks.view') }}" class="list-group-item list-group-item-action py-2 ripple"><i
-                                class="fas fa-car fa-fw me-3"></i><span>Trucks</span></a>
+                                class="fas fa-car fa-fw me-3"></i><span>Camion</span></a>
                                  <a href="{{ route('demandes.index') }}" class="list-group-item list-group-item-action py-2 ripple"><i
-                                class="fas fa-car fa-fw me-3"></i><span>Demande</span></a>
-                      
+                                class="fa-solid fa-clipboard"></i><span>Demande Traité</span></a>
+                                <a href="{{ route('demandes.demande') }}" class="list-group-item list-group-item-action py-2 ripple"><i
+                                    class="fa-solid fa-clipboard"></i><span>Demande Non Traité</span></a>
                 </div>
-            </div>
+            </div><i class=""></i>
         </nav>
         <!-- Sidebar -->
+        <i class=""></i>
 
 
 
