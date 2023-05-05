@@ -11,7 +11,7 @@ class Chauffeur extends Model
 {
     use HasFactory, Notifiable, HasApiTokens;
 
-    protected $fillable = ['nom', 'prenom', 'email', 'password', 'tel', 'condition','camion_remorquage_id',"device_token"];
+    protected $fillable = ['nom', 'prenom', 'email', 'password', 'tel', 'condition','camion_remorquage_id','device_token'];
   
     public function camionRemourquage()
     {

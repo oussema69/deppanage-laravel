@@ -278,6 +278,8 @@ public function update(Request $request, $id)
     $chauffeur = Chauffeur::findOrFail($chauffeurId);
     $chauffeur->device_token = $deviceToken;
     $chauffeur->save();
+    return $chauffeur;
+
 }
 
     public function auth(Request $request)
@@ -289,11 +291,11 @@ public function update(Request $request, $id)
 
         if ($chauffeur && Hash::check($password, $chauffeur->password)) {
             $token = $chauffeur->createToken('access_token')->accessToken;
-            $this->updateChauffeurDeviceToken($chauffeur->id, $device_token);
+            $updatedChauffeur = $this->updateChauffeurDeviceToken($chauffeur->id,$device_token);
 
             return response()->json([
                 'message' => 'Authentication successful',
-                'chauffeur' => $chauffeur,
+                'chauffeur' => $updatedChauffeur,
                 'access_token' => $token
             ], 200);
         } else {
