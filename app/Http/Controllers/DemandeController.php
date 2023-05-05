@@ -39,7 +39,7 @@ class DemandeController extends Controller
             return response()->json([
                 'message' => 'Cannot create demande.you have maximum 3 demandes for car.'
             ], 422);
-        }else{
+        } else {
             $demande = new Demande($validatedData);
             $demande->save();
 
@@ -48,11 +48,30 @@ class DemandeController extends Controller
                 'demande' => $demande
             ]);
         }
-
     }
 
+    public function sendNotif($token)
+    {
+        $client = new \GuzzleHttp\Client();
 
-    public function assignChauffeur( $demande, $chauffeur_id)
+        $response = $client->post('https://fcm.googleapis.com/fcm/send', [
+            'headers' => [
+                'Authorization' => 'BMS7zhX4iGRldNV-OYKwEiNKfcBNxUsIAWNNR6tAyeHKrnnLYcBMZCIY0IlJMNZv-UdL48FEJ43DnLM2PcEGQw8',
+                'Content-Type' => 'application/json'
+            ],
+            'json' => [
+                'to' => $token,
+                'notification' => [
+                    'title' => 'nouvelle demande',
+                    'body' => 'vous avez une nouvelle demande'
+                ]
+            ]
+        ]);
+
+        $body = $response->getBody();
+        echo $body;
+    }
+    public function assignChauffeur($demande, $chauffeur_id)
     {
         // Retrieve the demande and chauffeur based on the $demande and $chauffeur_id parameters
         $demande = Demande::findOrFail($demande);
@@ -64,11 +83,12 @@ class DemandeController extends Controller
         $camionRemourquageCar = new CamionRemourquageCar();
         $camionRemourquageCar->camion_remourquage_id = $chauffeur->camion_remourquage_id;
         $camionRemourquageCar->car_id = $demande->car_id;
-        $camionRemourquageCar->date =now()->format('Y-m-d H:i:s');
+        $camionRemourquageCar->date = now()->format('Y-m-d H:i:s');
 
         $camionRemourquageCar->save();
 
-
+        $this->sendNotif($demande->device_token);
+        $this->sendNotif($chauffeur->device_token);
         // Return a redirect with flashed message
         return redirect()->route('demandes.index')->with('message', 'Chauffeur assigned to demande successfully.');
     }
@@ -80,17 +100,17 @@ class DemandeController extends Controller
 
 
     public function index()
-{
-    $demandes = Demande::notValid()->get();
-    return view('demandes.index', compact('demandes'));
-}
-public function traitedDemande()
-{
-    $demandes = Demande::where('isValid', true)->get();
-    return view('demandes.demande', compact('demandes'));
-}
+    {
+        $demandes = Demande::notValid()->get();
+        return view('demandes.index', compact('demandes'));
+    }
+    public function traitedDemande()
+    {
+        $demandes = Demande::where('isValid', true)->get();
+        return view('demandes.demande', compact('demandes'));
+    }
 
-  public function destroy(Demande $demande)
+    public function destroy(Demande $demande)
     {
         $demande->delete();
         return redirect()->route('demandes.index')->with('success', 'Demande has been deleted successfully');
@@ -99,28 +119,27 @@ public function traitedDemande()
     {
         $search = $request->input('search');
         $demandes = Demande::where('nom', 'LIKE', '%' . $search . '%')
-                        ->orWhere('nbr_personne', 'LIKE', '%' . $search . '%')
-                        ->orWhere('type_veh', 'LIKE', '%' . $search . '%')
-                        ->orWhere('date', 'LIKE', '%' . $search . '%')
-                        ->orWhereHas('client', function ($query) use ($search) {
-                            $query->where('nom', 'LIKE', '%' . $search . '%');
-                        })
-                        ->orWhereHas('chauffeur', function ($query) use ($search) {
-                            $query->where('nom', 'LIKE', '%' . $search . '%');
-                        })
-                        ->orWhereHas('car', function ($query) use ($search) {
-                            $query->where('nom', 'LIKE', '%' . $search . '%');
-                        })
-                        ->get();
+            ->orWhere('nbr_personne', 'LIKE', '%' . $search . '%')
+            ->orWhere('type_veh', 'LIKE', '%' . $search . '%')
+            ->orWhere('date', 'LIKE', '%' . $search . '%')
+            ->orWhereHas('client', function ($query) use ($search) {
+                $query->where('nom', 'LIKE', '%' . $search . '%');
+            })
+            ->orWhereHas('chauffeur', function ($query) use ($search) {
+                $query->where('nom', 'LIKE', '%' . $search . '%');
+            })
+            ->orWhereHas('car', function ($query) use ($search) {
+                $query->where('nom', 'LIKE', '%' . $search . '%');
+            })
+            ->get();
 
-        return view('demandes.index', compact('demandes','search'));
-
+        return view('demandes.index', compact('demandes', 'search'));
     }
-    public function getDemandesByRole($id,$type)
+    public function getDemandesByRole($id, $type)
     {
-        if($type==1){
+        if ($type == 1) {
             $demandes = Demande::where('client_id', $id)->get();
-        }else{
+        } else {
             $demandes = Demande::where('chauffeur_id', $id)->get();
         }
         return response()->json($demandes);
@@ -130,37 +149,24 @@ public function traitedDemande()
     {
         // Find the demande with the given id
         $demande = Demande::find($id);
-    
+
         // If demande does not exist, return an error message
         if (!$demande) {
             return response()->json([
                 'message' => 'Demande not found'
             ], 404);
         }
-    
+
         // Set isValid attribute to true
         $demande->isValid = true;
-    
+
         // Save changes to the database
         $demande->save();
-    
+
         // Return success response
         return response()->json([
             'message' => 'Demande isValid attribute updated successfully',
             'demande' => $demande
         ]);
     }
-    
-
-
-
-
-
-
-
-
-
-
-
-
 }

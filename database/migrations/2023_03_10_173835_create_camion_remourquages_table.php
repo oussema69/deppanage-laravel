@@ -67,6 +67,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('tel');
             $table->string('condition');
+            $table->string('device_token')->nullable();
             $table->unsignedBigInteger('camion_remourquage_id')->unique();
             $table->foreign('camion_remourquage_id')->references('id')->on('camion_remourquage')->onDelete('cascade');
             $table->timestamps();

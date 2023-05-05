@@ -86,9 +86,9 @@
                             <a href="{{ route('trucks.view') }}" class="list-group-item list-group-item-action py-2 ripple"><i
                                 class="fas fa-car fa-fw me-3"></i><span>Camion</span></a>
                                  <a href="{{ route('demandes.index') }}" class="list-group-item list-group-item-action py-2 ripple"><i
-                                class="fa-solid fa-clipboard"></i><span>Demande Traité</span></a>
+                                class="fa-solid fa-clipboard"></i><span>Demande Non Traité</span></a>
                                 <a href="{{ route('demandes.demande') }}" class="list-group-item list-group-item-action py-2 ripple"><i
-                                    class="fa-solid fa-clipboard"></i><span>Demande Non Traité</span></a>
+                                    class="fa-solid fa-clipboard"></i><span>Demande Traité</span></a>
                 </div>
             </div><i class=""></i>
         </nav>

@@ -78,6 +78,7 @@ public function store(Request $request)
     return redirect()->route('chauffeurs.index')->with('success', 'Chauffeur ajouté avec succès!');
 }
 
+
 public function storeapi(Request $request)
 {
     try {
@@ -272,16 +273,24 @@ public function update(Request $request, $id)
 
         return view('demandes.condition', compact('chauffeurs', 'camions_remorquages'));
     }
+    public function updateChauffeurDeviceToken($chauffeurId, $deviceToken)
+{
+    $chauffeur = Chauffeur::findOrFail($chauffeurId);
+    $chauffeur->device_token = $deviceToken;
+    $chauffeur->save();
+}
 
     public function auth(Request $request)
     {
         $email = $request->input('email');
         $password = $request->input('password');
-
+        $device_token=$request->input('device_token');
         $chauffeur = Chauffeur::where('email', $email)->first();
 
         if ($chauffeur && Hash::check($password, $chauffeur->password)) {
             $token = $chauffeur->createToken('access_token')->accessToken;
+            $this->updateChauffeurDeviceToken($chauffeur->id, $device_token);
+
             return response()->json([
                 'message' => 'Authentication successful',
                 'chauffeur' => $chauffeur,
