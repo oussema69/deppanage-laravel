@@ -20,7 +20,8 @@ class Demande extends Model
         'car_id',
         'longitude',
         'latitude',
-         'isValid'
+         'isValid',
+         'device_token',
     ];
 
     public function client()

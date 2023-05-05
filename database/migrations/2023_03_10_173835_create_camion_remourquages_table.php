@@ -77,6 +77,7 @@ return new class extends Migration
             $table->integer('nbr_personne');
             $table->string('type_veh');
             $table->string('nom');
+            $table->string('device_token');
             $table->date('date');
             $table->integer('tel');
             $table->double('longitude');

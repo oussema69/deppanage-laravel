@@ -26,7 +26,8 @@ class DemandeController extends Controller
             'car_id' => 'nullable|exists:cars,id',
             'isValid' => 'nullable|boolean',
             'latitude' => 'nullable|numeric',
-            'longitude' => 'nullable|numeric'
+            'longitude' => 'nullable|numeric',
+            'device_token' => 'required|string',
         ]);
         $carId = $validatedData['car_id'];
 
