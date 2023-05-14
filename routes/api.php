@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Session;
 
 
 
-Route::post('chauffeur/authenticate', [AuthController::class, 'chauffeurAuthenticate']);
+
 Route::post('clients/store', [ClientController::class, 'storeapi']);
 Route::put('/clients/update/{id}', [ClientController::class, 'updateapi']);
 Route::get('/clients/{id}', [ClientController::class, 'showApi']);

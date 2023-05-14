@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
-use App\Models\Administrateur; 
+use App\Models\Administrateur;
 
 use App\Models\Chauffeur;
 use App\Models\CamionRemourquage;
@@ -274,43 +274,44 @@ public function update(Request $request, $id)
         return view('demandes.condition', compact('chauffeurs', 'camions_remorquages'));
     }
     public function updateChauffeurDeviceToken($chauffeurId, $deviceToken)
+    {
+        $chauffeur = Chauffeur::find($chauffeurId);
+        $chauffeur->device_token = $deviceToken;
+        $chauffeur->save();
+        return $chauffeur;
+    }
+public function auth(Request $request)
 {
-    $chauffeur = Chauffeur::findOrFail($chauffeurId);
-    $chauffeur->device_token = $deviceToken;
-    $chauffeur->save();
-    return $chauffeur;
+    $email = $request->input('email');
+    $password = $request->input('password');
+    $device_token = $request->input('device_token');
+    $chauffeur = Chauffeur::where('email', $email)->first();
 
+    if ($chauffeur && Hash::check($password, $chauffeur->password)) {
+        $token = $chauffeur->createToken('access_token')->accessToken;
+        $updatedChauffeur = $this->updateChauffeurDeviceToken($chauffeur->id, $device_token);
+
+        return response()->json([
+            'message' => 'Authentication successful',
+            'chauffeur' => $updatedChauffeur,
+            'access_token' => $token
+        ], 200);
+    } else {
+        return response()->json([
+            'message' => 'Invalid credentials'
+        ], 401);
+    }
 }
 
-    public function auth(Request $request)
-    {
-        $email = $request->input('email');
-        $password = $request->input('password');
-        $device_token=$request->input('device_token');
-        $chauffeur = Chauffeur::where('email', $email)->first();
 
-        if ($chauffeur && Hash::check($password, $chauffeur->password)) {
-            $token = $chauffeur->createToken('access_token')->accessToken;
-            $updatedChauffeur = $this->updateChauffeurDeviceToken($chauffeur->id,$device_token);
 
-            return response()->json([
-                'message' => 'Authentication successful',
-                'chauffeur' => $updatedChauffeur,
-                'access_token' => $token
-            ], 200);
-        } else {
-            return response()->json([
-                'message' => 'Invalid credentials'
-            ], 401);
-        }
-    }
     public function authAdmin(Request $request)
     {
         $email = $request->input('email');
         $password = $request->input('password');
-    
+
         $administrateur = Administrateur::where('email', $email)->first();
-    
+
         if ($administrateur && $password === $administrateur->password) {
             // Authentication successful
             // Perform actions here for authenticated Administrateur
