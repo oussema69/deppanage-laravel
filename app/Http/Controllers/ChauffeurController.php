@@ -315,7 +315,7 @@ public function auth(Request $request)
         if ($administrateur && $password === $administrateur->password) {
             // Authentication successful
             // Perform actions here for authenticated Administrateur
-            return redirect()->route('clients.index'); // Example: Redirect to dashboard
+            return redirect()->route('dash'); // Example: Redirect to dashboard
         } else {
             // Invalid credentials
             // Perform actions here for failed authentication

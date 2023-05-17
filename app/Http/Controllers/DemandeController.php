@@ -106,6 +106,10 @@ class DemandeController extends Controller
         $demandes = Demande::notValid()->get();
         return view('demandes.index', compact('demandes'));
     }
+    public function welcome()
+    {
+        return view('welcome');
+    }
     public function traitedDemande()
     {
         $demandes = Demande::where('isValid', true)->get();

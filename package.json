@@ -18,6 +18,7 @@
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^6.3.0",
+        "chat.js": "^1.0.2",
         "font-awesome": "^4.7.0",
         "sass-loader": "^13.2.0"
     }

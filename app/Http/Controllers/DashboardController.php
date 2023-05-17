@@ -21,7 +21,9 @@ class DashboardController extends Controller
         // Retrieve statistics for Chauffeurs table
         $totalChauffeurs = DB::table('chauffeurs')->count();
         $totaldep = DB::table('camion_remourquage_car')->count();
-
+        $demandeTraite = DB::table('demandes')->where('isValid', true)->count();
+        $demandeNonTrait = DB::table('demandes')->where('isValid', false)->count();
+    
     
         // Pass all the retrieved statistics to the dashboard view
         return view('dashboard')
@@ -29,7 +31,10 @@ class DashboardController extends Controller
             ->with('totalCars', $totalCars)
             ->with('totalCamionRemourquage', $totalCamionRemourquage)
             ->with('totaldep', $totaldep)
-            ->with('totalChauffeurs', $totalChauffeurs);
+            ->with('totalChauffeurs', $totalChauffeurs)
+            ->with('demandeNon',$demandeNonTrait )
+            ->with('demande',$demandeTraite );
+
     }
     
 }

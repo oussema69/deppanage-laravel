@@ -1,24 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
-<nav class="navbar navbar-expand-lg navbar-primary bg-primary mb-3" style="margin-top: -38px">
-    <a class="navbar-brand" ><span class='text-center' style="color:aliceblue;margin-left:70px"><i class="fa-solid fa-users"></i>Drivres List</span></a>
+<nav class="navbar navbar-expand-lg navbar-primary bg-primary mb-3" style="margin-top: -1px;margin-left:1%;background-color: #4f44c7 !important;">
+    <a class="navbar-brand" ><span class='text-center' style="color:aliceblue;margin-left:70px"><i class="fa-solid fa-users"></i>Listes Des Chauffeurs</span></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="col-md-6" style="margin-left:250px">
+    <div class="col-md-6" style="margin-left:160px">
         <form action="{{ route('chauffeurs.index') }}" method="GET" class="d-flex justify-content-end">
           <div class="input-group">
-            <input type="text" class="form-control" name="search" placeholder="Search...">
+            <input type="text" class="form-control" name="search" placeholder="Rechercher...">
             <button type="submit" class="btn btn-secondary ml-2"><i class="fa-sharp fa-solid fa-magnifying-glass"></i></button>
           </div>
         </form>
       </div>
 
   </nav>
-    <div class="container" style="margin-top: 50px">
+    <div class="container" style="margin-top: 10px">
 
-        <table class="table">
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -45,8 +45,8 @@
                         <td>
                             <a href="{{ route('chauffeurs.show', $chauffeur->id) }}" class="btn btn-primary"><i class="fa-sharp fa-solid fa-eye"></i></a>
                             <a href="{{ route('chauffeurs.edit', $chauffeur->id) }}" class="btn btn-success"><i class="fa-sharp fa-solid fa-pencil"></i></a>
-                                                    
-                         
+
+
                             <form action="{{ route('chauffeurs.destroy', $chauffeur->id) }}" method="POST" style="display: inline-block;">
                                 @csrf
                                 @method('DELETE')
@@ -69,5 +69,5 @@
         <a href="{{ route('chauffeurs.create') }}" class="btn btn-primary">+Add Chauffeur</a>
 
     </div>
-      
+
 @endsection

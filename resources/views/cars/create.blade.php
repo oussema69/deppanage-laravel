@@ -8,7 +8,7 @@
     </div>
 @endif
 
-        <div class="row">
+        <div class="row" >
             <div class="col-md-12">
                 <h1 class="text-center">Add Car</h1>
                 <form method="POST" action="{{ route('cars.store', ['client' => $client->id]) }}">
@@ -67,7 +67,7 @@
                             </span>
                         @enderror
                     </div>
-                
+
                     <button type="submit" class="btn btn-primary">Save</button>
                     <a href="{{ route('clients.show', ['id' => $client->id]) }}" class="btn btn-primary">View Details</a>
                 </form>
