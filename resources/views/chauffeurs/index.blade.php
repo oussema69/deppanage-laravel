@@ -66,7 +66,7 @@
             <a href="{{ route('chauffeurs.index') }}" class="btn btn-secondary"><i class="fa-sharp fa-solid fa-arrow-left"></i></a>
         </div>
         @endif
-        <a href="{{ route('chauffeurs.create') }}" class="btn btn-primary">+Add Chauffeur</a>
+        <a href="{{ route('chauffeurs.create') }}" class="btn btn-primary">+Ajouter Chauffeur</a>
 
     </div>
 

@@ -4,16 +4,16 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1 class='text-center text-primary' >Truck Details</h1>
+                <h1 class='text-center text-primary' >Camion Details</h1>
                 <table class="table table-striped">
                     <tbody>
                         <tr>
-                            
+
                             <th>id</th>
                             <td>{{ $truck->id }}</td>
                         </tr>
                         <tr>
-                            
+
                             <th>matricule</th>
                             <td>{{ $truck->matricule }}</td>
                         </tr>

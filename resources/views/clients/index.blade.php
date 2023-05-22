@@ -71,7 +71,7 @@
             <div class="container mb-3">
                 <div class="row">
                   <div class="col-md-6">
-                    <a href="{{ route('clients.create') }}" class="btn btn-primary"><i class="fa-sharp fa-solid fa-plus"></i>Create</a>
+                    <a href="{{ route('clients.create') }}" class="btn btn-primary"><i class="fa-sharp fa-solid fa-plus"></i>Ajouter</a>
                   </div>
 
                 </div>

@@ -3,7 +3,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1 class="text-center text-primary">Depanned Cars by {{ $truck->matricule }}</h1>
+    <h1 class="text-center text-primary">Voiture Depannée avec {{ $truck->matricule }}</h1>
 
     <table class="table table-striped">
         <thead>
@@ -39,7 +39,7 @@
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this cars?')"><i class="fa-sharp fa-solid fa-trash"></i></button>
                     </form>
-                    
+
                 </td>
                 <td>
                     <a href="{{ route('cars.clients.show', $car->id) }}" class="btn btn-primary"><i class="fa-sharp fa-solid fa-user"></i></a>

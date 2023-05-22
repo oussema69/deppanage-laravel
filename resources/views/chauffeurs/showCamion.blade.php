@@ -18,14 +18,14 @@
                 <td>{{ $camion->model }}</td>
                 <td>{{ $camion->etat }}</td>
             </tr>
-       
+
         </tbody>
-      
+
     </table>
-    <a href="{{ route('trucks.edit', ['truck' => $camion->id]) }}" class="btn btn-primary">Edit</a>
+    <a href="{{ route('trucks.edit', ['truck' => $camion->id]) }}" class="btn btn-primary">Modifier</a>
     <form action="{{ route('trucks.destroy', ['truck' => $camion->id]) }}" method="POST" style="display: inline;">
         @csrf
         @method('DELETE')
-        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this truck?')">Delete</button>
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Voulez vous supprimer ce camion?')">Supprimer</button>
     </form>
 @endsection

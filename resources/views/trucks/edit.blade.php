@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1 class="text-center text-primary">Edit Truck</h1>
+                <h1 class="text-center text-primary">Modifier Camion</h1>
                 <form action="{{ route('trucks.update', ['truck' => $truck->id]) }}" method="POST">
                     @csrf
                     @method('PUT')
@@ -24,7 +24,7 @@
                             <option value="panne" {{ $truck->etat == 'panne' ? 'selected' : '' }}>Panne</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Update Truck</button>
+                    <button type="submit" class="btn btn-primary">Modifier</button>
                     <div id="message"></div>
                     @if(session('message'))
                     <div class="alert alert-success" role="alert" id="success-message">

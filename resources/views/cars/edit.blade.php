@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h1 class="text-primary text-center"><i
-                    class="fas fa-pencil fa-fw me-3"></i>Edit Car Details</h1>
+                    class="fas fa-pencil fa-fw me-3"></i>Detail</h1>
                 <form action="{{ route('cars.update', ['car' => $car->id]) }}" method="POST">
                     @csrf
                     @method('PUT')
@@ -68,7 +68,7 @@
                         </span>
                     @enderror
                     </div>
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="submit" class="btn btn-primary">Enregistre</button>
                 </form>
             </div>
         </div>

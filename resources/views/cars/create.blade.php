@@ -10,7 +10,7 @@
 
         <div class="row" >
             <div class="col-md-12">
-                <h1 class="text-center">Add Car</h1>
+                <h1 class="text-center">Ajouter Une Voiture</h1>
                 <form method="POST" action="{{ route('cars.store', ['client' => $client->id]) }}">
                     @csrf
                     <div class="form-group">
@@ -68,7 +68,7 @@
                         @enderror
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
                     <a href="{{ route('clients.show', ['id' => $client->id]) }}" class="btn btn-primary">View Details</a>
                 </form>
                 </div>

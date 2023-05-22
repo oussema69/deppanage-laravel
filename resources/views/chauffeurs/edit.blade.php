@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1 class="text-center">Edit Chauffeur</h1>
+        <h1 class="text-center">Modifier Chauffeur</h1>
 
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -51,7 +51,7 @@
                     <option value="Non occupé" {{ old('condition', $chauffeur->condition) == 'Non occupé' ? 'selected' : '' }}>Non occupé</option>
                 </select>
             </div>
-            
+
 
             <div class="form-group">
                 <label for="camion_remourquage_id">Camion Remorquage:</label>
@@ -66,11 +66,11 @@
                     @endforeach
                 </select>
             </div>
-            
 
-            
 
-            <button type="submit" class="btn btn-primary">Submit</button>
+
+
+            <button type="submit" class="btn btn-primary">Enregistrer</button>
         </form>
     </div>
 @endsection

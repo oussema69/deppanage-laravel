@@ -32,17 +32,17 @@
                             <td>{{ $car->date_fin }}</td>
                         </tr>
                         <tr>
-                            <td>Owner:</td>
+                            <td>propriétaire:</td>
                             <td>{{ $car->client->nom }} {{ $car->client->prenom }}</td>
                         </tr>
                     </tbody>
                 </table>
                 <a href="{{ route('cars.edit', ['car' => $car->id]) }}" class="btn btn-success"><i
-                        class="fa-sharp fa-solid fa-pencil"></i> Edit</a>
+                        class="fa-sharp fa-solid fa-pencil"></i> Modifier</a>
                 <form action="{{ route('cars.destroy', ['car' => $car->id]) }}" method="POST" style="display: inline-block;">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this car?')"><i class="fa-sharp fa-solid fa-trash"></i> Delete</button>
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Vous Voulez supprimer cet voiture?')"><i class="fa-sharp fa-solid fa-trash"></i> Supprimer</button>
                 </form>
             </div>
         </div>

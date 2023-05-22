@@ -5,9 +5,9 @@
         <div class="row">
             <div class="col-md-12">
                 @if ($trucks->isEmpty())
-                    <p>No trucks found.</p>
+                    <p>Aucun Camion.</p>
                 @else
-                    <h1 class='text-center text-primary'>Trucks List for Car {{ $car->id }}</h1>
+                    <h1 class='text-center text-primary'>liste des camion pour la voiture {{ $car->id }}</h1>
                     <table class="table table-striped">
                         <thead>
                             <tr>

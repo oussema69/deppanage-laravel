@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1>Create a new truck</h1>
+        <h1>Ajouter Camion</h1>
 
         <form action="{{ route('trucks.store') }}" method="POST">
             @csrf
@@ -31,7 +31,7 @@
                 @endif
             </div>
 
-            <button type="submit" class="btn btn-primary">Create</button>
+            <button type="submit" class="btn btn-primary">Ajouter</button>
         </form>
     </div>
 @endsection

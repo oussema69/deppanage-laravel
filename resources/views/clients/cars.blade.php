@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h1 class='text-center text-primary'><i
-                    class="fas fa-users fa-fw me-3"></i>Cars List for {{ $client->nom }} {{ $client->prenom }}</h1>
+                    class="fas fa-users fa-fw me-3"></i>Liste de Voiture Pour {{ $client->nom }} {{ $client->prenom }}</h1>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -40,7 +40,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger"
-                                                onclick="return confirm('Are you sure you want to delete this car?')"><i
+                                                onclick="return confirm('voulez vous supprimer cet voiture?')"><i
                                                     class="fa-sharp fa-solid fa-trash"></i></button>
                                         </form>
                                     </td>
@@ -56,7 +56,7 @@
                 </table>
             </div>
         </div>
-        <a href="{{ route('cars.create', ['client' => $client->id]) }}" class="btn btn-primary mb-3">Add New Car</a>
+        <a href="{{ route('cars.create', ['client' => $client->id]) }}" class="btn btn-primary mb-3">AJouter Voiture</a>
 
     </div>
 @endsection

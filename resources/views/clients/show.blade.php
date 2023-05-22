@@ -8,12 +8,12 @@
         <table class="table table-striped">
             <tbody>
                 <tr>
-                    
+
                     <th>Email:</th>
                     <td>{{  $client->email }}</td>
                 </tr>
                 <tr>
-                    
+
                     <th>Matricule:</th>
                     <td>{{ $client->matricule }}</td>
                 </tr>
@@ -27,10 +27,10 @@
                 </tr>
             </tbody>
         </table>
-        <a href="{{ route('clients.edit', $client->id) }}" class="btn btn-primary">Edit</a>
+        <a href="{{ route('clients.edit', $client->id) }}" class="btn btn-primary">Modifier</a>
         <form action="{{ route('clients.destroy', ['id' => $client->id]) }}" method="POST" style="display: inline-block;">
             @csrf
             @method('DELETE')
-            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this client?')">Delete</button>
-        </form> 
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this client?')">Supprimer</button>
+        </form>
 @endsection

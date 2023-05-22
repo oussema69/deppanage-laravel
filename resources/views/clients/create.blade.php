@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1 class='text-center'>Create Client</h1>
+        <h1 class='text-center'>Ajouter Client</h1>
         @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -66,7 +66,7 @@
                 <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                 @enderror
             </div>
-            <button type="submit" class="btn btn-primary" style="margin-left:43%;width:10%"><i class="fa-sharp fa-solid fa-plus"></i>Create</button>
+            <button type="submit" class="btn btn-primary" style="margin-left:43%;width:10%"><i class="fa-sharp fa-solid fa-plus"></i>Ajouter</button>
 
         </form>
     </div>
