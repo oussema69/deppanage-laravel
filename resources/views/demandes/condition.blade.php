@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<nav class="navbar navbar-expand-lg navbar-primary bg-primary mb-3" style="margin-top: -38px">
+
+<nav class="navbar navbar-expand-lg navbar-primary bg-primary mb-3" style="margin-top: -1px;margin-left:1%;background-color: #4f44c7 !important;">
     <a class="navbar-brand" ><span class='text-center' style="color:aliceblue;margin-left:70px"><i class="fa-solid fa-users"></i>Drivres List</span></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -16,6 +17,13 @@
       </div>
 
   </nav>
+  <?php
+  if (isset($_SESSION['error_message'])) {
+    $errorMessage = $_SESSION['error_message'];
+    echo "Error: " . $errorMessage;
+    unset($_SESSION['error_message']); // Clear the error message from the session
+}
+?>
     <div class="container" style="margin-top: 50px">
 
         <table class="table">
@@ -65,7 +73,7 @@
 
 
                             </form>
-                            
+
                         </td>
 
                     </tr>

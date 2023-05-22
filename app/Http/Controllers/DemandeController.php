@@ -54,25 +54,30 @@ class DemandeController extends Controller
     {
         $client = new \GuzzleHttp\Client();
 
-        $response = $client->post('https://fcm.googleapis.com/fcm/send', [
-            'headers' => [
-                'Authorization' => 'key=AAAAGYS-2So:APA91bFOeNV4ltieYQ7FT5EYBwbUJLpcLeLFvNfiODekvvlg7DaI1SSmjMeMXn4Mh6gfCbUV9IBtcm04tz8kqFNG2-RYDSP76KgImYgLHgusBk87X8C0t3sLGe2exC_fj-dtbgXsNPWI',
-                'Content-Type' => 'application/json'
-            ],
-            'json' => [
-                'to' => $token,
-                'notification' => [
-                    'title' => 'nouvelle demande',
-                    'body' => 'vous avez une nouvelle demande'
+        try {
+            $response = $client->post('https://fcm.googleapis.com/fcm/send', [
+                'headers' => [
+                    'Authorization' => 'key=AAAAGYS-2So:APA91bFOeNV4ltieYQ7FT5EYBwbUJLpcLeLFvNfiODekvvlg7DaI1SSmjMeMXn4Mh6gfCbUV9IBtcm04tz8kqFNG2-RYDSP76KgImYgLHgusBk87X8C0t3sLGe2exC_fj-dtbgXsNPWI',
+                    'Content-Type' => 'application/json'
+                ],
+                'json' => [
+                    'to' => $token,
+                    'notification' => [
+                        'title' => 'nouvelle demande',
+                        'body' => 'vous avez une nouvelle demande'
+                    ]
                 ]
-            ]
-        ]);
+            ]);
 
+            $body = $response->getBody();
+            echo $body;
+        } catch (\Exception $e) {
+            // Save error message in session
 
-
-        $body = $response->getBody();
-        echo $body;
+            $_SESSION['error_message'] = $e->getMessage();
+        }
     }
+
     public function assignChauffeur($demande, $chauffeur_id)
     {
         // Retrieve the demande and chauffeur based on the $demande and $chauffeur_id parameters

@@ -15,6 +15,13 @@
         </form>
 
   </nav>
+  <?php
+  if (isset($_SESSION['error_message'])) {
+    $errorMessage = $_SESSION['error_message'];
+    echo "Error: " . $errorMessage;
+    unset($_SESSION['error_message']); // Clear the error message from the session
+}
+?>
   <div class="container" >
 
     <table class="table table-striped">
