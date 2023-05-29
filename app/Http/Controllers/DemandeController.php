@@ -75,15 +75,48 @@ class DemandeController extends Controller
             // Save error message in session
 
             $_SESSION['error_message'] = $e->getMessage();
+            return;
+        }
+    }
+
+    public function sendNotif1($token)
+    {
+        $client = new \GuzzleHttp\Client();
+
+        try {
+            $response = $client->post('https://fcm.googleapis.com/fcm/send', [
+                'headers' => [
+                    'Authorization' => 'key=AAAAGYS-2So:APA91bFOeNV4ltieYQ7FT5EYBwbUJLpcLeLFvNfiODekvvlg7DaI1SSmjMeMXn4Mh6gfCbUV9IBtcm04tz8kqFNG2-RYDSP76KgImYgLHgusBk87X8C0t3sLGe2exC_fj-dtbgXsNPWI',
+                    'Content-Type' => 'application/json'
+                ],
+                'json' => [
+                    'to' => $token,
+                    'notification' => [
+                        'title' => 'nouvelle demande',
+                        'body' => 'votre Demande est en cours de traitement '
+                    ]
+                ]
+            ]);
+
+            $body = $response->getBody();
+            echo $body;
+        } catch (\Exception $e) {
+            // Save error message in session
+
+            $_SESSION['error_message'] = $e->getMessage();
+            return;
         }
     }
 
     public function assignChauffeur($demande, $chauffeur_id)
     {
+
         // Retrieve the demande and chauffeur based on the $demande and $chauffeur_id parameters
         $demande = Demande::findOrFail($demande);
         $chauffeur = Chauffeur::findOrFail($chauffeur_id);
 
+        $this->sendNotif($demande->device_token);
+        $this->sendNotif($chauffeur->device_token);
         // Update the demande with the assigned chauffeur
         $demande->chauffeur_id = $chauffeur->id;
         $demande->save();
@@ -93,9 +126,9 @@ class DemandeController extends Controller
         $camionRemourquageCar->date = now()->format('Y-m-d H:i:s');
 
         $camionRemourquageCar->save();
-
-        $this->sendNotif($demande->device_token);
+        $this->sendNotif1($demande->device_token);
         $this->sendNotif($chauffeur->device_token);
+
         // Return a redirect with flashed message
         return redirect()->route('demandes.index')->with('message', 'Chauffeur assigned to demande successfully.');
     }
