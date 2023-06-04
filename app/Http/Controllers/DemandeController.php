@@ -50,7 +50,7 @@ class DemandeController extends Controller
         }
     }
 
-    public function sendNotif($token,$tel)
+    public function sendNotif($token)
     {
         $client = new \GuzzleHttp\Client();
 
@@ -64,7 +64,7 @@ class DemandeController extends Controller
                     'to' => $token,
                     'notification' => [
                         'title' => 'nouvelle demande',
-                        'body' => 'vous avez une nouvelle demande tel:'. $tel
+                        'body' => 'vous avez une nouvelle demande tel:'
                     ]
                 ]
             ]);
@@ -79,7 +79,7 @@ class DemandeController extends Controller
         }
     }
 
-    public function sendNotif1($token)
+    public function sendNotiftoClient($token,$tel)
     {
         $client = new \GuzzleHttp\Client();
 
@@ -93,8 +93,8 @@ class DemandeController extends Controller
                     'to' => $token,
                     'notification' => [
                         'title' => 'nouvelle demande',
-                        'body' => 'votre Demande est en cours de traitement '
-                    ]
+                        'body' => 'Votre demande est en cours de traitement avec le chauffeur de téléphone '.$tel.'.'
+                        ]
                 ]
             ]);
 
@@ -114,7 +114,8 @@ class DemandeController extends Controller
         // Retrieve the demande and chauffeur based on the $demande and $chauffeur_id parameters
         $demande = Demande::findOrFail($demande);
         $chauffeur = Chauffeur::findOrFail($chauffeur_id);
-
+        $this->sendNotif1($demande->device_token,$chauffeur->tel);
+        $this->sendNotif($chauffeur->device_token);
 
         // Update the demande with the assigned chauffeur
         $demande->chauffeur_id = $chauffeur->id;
@@ -125,8 +126,7 @@ class DemandeController extends Controller
         $camionRemourquageCar->date = now()->format('Y-m-d H:i:s');
 
         $camionRemourquageCar->save();
-        $this->sendNotif1($demande->device_token);
-        $this->sendNotif($chauffeur->device_token,$demande->tel);
+
 
         // Return a redirect with flashed message
         return redirect()->route('demandes.index')->with('message', 'Chauffeur assigned to demande successfully.');
