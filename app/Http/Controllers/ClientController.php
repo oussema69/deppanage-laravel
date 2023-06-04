@@ -210,6 +210,7 @@ public function showCarsapi($id)
 
         return redirect('/clients')->with('success', 'Client has been deleted Successfully');
     }
+
     public function auth(Request $request)
     {
         $email = $request->input('email');
@@ -218,17 +219,33 @@ public function showCarsapi($id)
         $client = Client::where('email', $email)->first();
 
         if ($client && Hash::check($password, $client->password)) {
+            if (!$client->isValid) {
+                return response()->json([
+                    'message' => 'Account not activated. Please activate your account.',
+                ], 401);
+            }
+
             return response()->json([
                 'message' => 'Authentication successful',
                 'client' => $client
             ], 200);
         } else {
             return response()->json([
-                'message' => 'Invalida credentials'
+                'message' => 'Invalid credentials'
             ], 401);
         }
     }
 
+
+    public function updateValidity($id)
+    {
+        $client = Client::findOrFail($id);
+        $client->isValid = true;
+        $client->save();
+
+        // Optionally, you can return a response or redirect to another page
+        return redirect()->back()->with('success', 'Client validity updated successfully.');
+    }
 
 }
 

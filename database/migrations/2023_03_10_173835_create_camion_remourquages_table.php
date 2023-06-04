@@ -22,6 +22,7 @@ return new class extends Migration
                 $table->string('password');
                 $table->string('matricule')->unique();
                 $table->string('tel');
+                $table->boolean('isValid')->default(false);
                 $table->string('num_assurance');
                 $table->timestamps();
             });

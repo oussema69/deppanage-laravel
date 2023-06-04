@@ -17,6 +17,7 @@ class Client extends Model
         'matricule',
         'num_assurance',
         'tel',
+        'isValid',
     ];
 
     public function cars()

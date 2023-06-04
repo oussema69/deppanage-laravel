@@ -50,7 +50,7 @@ class DemandeController extends Controller
         }
     }
 
-    public function sendNotif($token)
+    public function sendNotif($token,$tel)
     {
         $client = new \GuzzleHttp\Client();
 
@@ -64,7 +64,7 @@ class DemandeController extends Controller
                     'to' => $token,
                     'notification' => [
                         'title' => 'nouvelle demande',
-                        'body' => 'vous avez une nouvelle demande'
+                        'body' => 'vous avez une nouvelle demande tel:'. $tel
                     ]
                 ]
             ]);
@@ -115,8 +115,7 @@ class DemandeController extends Controller
         $demande = Demande::findOrFail($demande);
         $chauffeur = Chauffeur::findOrFail($chauffeur_id);
 
-        $this->sendNotif($demande->device_token);
-        $this->sendNotif($chauffeur->device_token);
+
         // Update the demande with the assigned chauffeur
         $demande->chauffeur_id = $chauffeur->id;
         $demande->save();
@@ -127,7 +126,7 @@ class DemandeController extends Controller
 
         $camionRemourquageCar->save();
         $this->sendNotif1($demande->device_token);
-        $this->sendNotif($chauffeur->device_token);
+        $this->sendNotif($chauffeur->device_token,$demande->tel);
 
         // Return a redirect with flashed message
         return redirect()->route('demandes.index')->with('message', 'Chauffeur assigned to demande successfully.');

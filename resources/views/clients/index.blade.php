@@ -33,7 +33,6 @@
                             <th>Numéro d'assurance</th>
                             <th>Téléphone</th>
                             <th>Actions</th>
-                            <th>View Cars</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -46,6 +45,7 @@
                             <td>{{ $client->num_assurance }}</td>
                             <td>{{ $client->tel }}</td>
                             <td>
+
                                 <a href="{{ route('clients.show', ['id' => $client->id]) }}" class="btn btn-primary"><i class="fa-sharp fa-solid fa-eye"></i></a>
                                 <a href="{{ route('clients.edit', ['id' => $client->id]) }}" class="btn btn-success"><i class="fa-sharp fa-solid fa-pencil"></i></a>
                                 <form action="{{ route('clients.destroy', ['id' => $client->id]) }}" method="POST" style="display: inline-block;">
@@ -53,9 +53,17 @@
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this client?')"><i class="fa-sharp fa-solid fa-trash"></i></button>
                                 </form>
-                            </td>
-                            <td>
+
+
                                 <a href="{{ route('clients.cars', ['id' => $client->id]) }}" class="btn btn-primary"><i class="fa-sharp fa-solid fa-car"></i></a>
+
+                                @if (!$client->isValid)
+        <form action="{{ route('clients.updateValidity', ['id' => $client->id]) }}" method="POST" style="display: inline-block;">
+            @csrf
+            @method('PUT')
+            <button type="submit" class="btn btn-secondary"><i class="fa-sharp fa-solid fa-lock"></i></button>
+        </form>
+    @endif
                             </td>
                         </tr>
                         @endforeach

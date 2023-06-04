@@ -87,7 +87,7 @@
             background-color: #e9ecef;
             border: 1px solid #ced4da;
             border-radius: 0;
-        } 
+        }
         </style>
 <div class="container">
     <div class="card card-login mx-auto text-center bg-dark">
@@ -126,7 +126,7 @@
                     <input type="submit" name="btn" value="Login" class="btn btn-outline-danger float-right login_btn">
                 </div>
                 <!-- Display validation errors -->
-           
+
             </form>
         </div>
     </div>

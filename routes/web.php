@@ -75,6 +75,7 @@ Route::middleware(['web'])->group(function () {
    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dash');
    Route::get('/demandesNot', [DemandeController::class, 'traitedDemande'])->name('demandes.demande');
    Route::get('/welcome', [DemandeController::class, 'welcome'])->name('welcome');
+   Route::put('/clients/{id}/updateValidity', [ClientController::class, 'updateValidity'])->name('clients.updateValidity');
 
 
    /*
