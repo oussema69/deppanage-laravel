@@ -64,7 +64,7 @@ class DemandeController extends Controller
                     'to' => $token,
                     'notification' => [
                         'title' => 'nouvelle demande',
-                        'body' => 'vous avez une nouvelle demande tel:'
+                        'body' => 'vous avez une nouvelle demande'
                     ]
                 ]
             ]);
@@ -93,7 +93,7 @@ class DemandeController extends Controller
                     'to' => $token,
                     'notification' => [
                         'title' => 'nouvelle demande',
-                        'body' => 'Votre demande est en cours de traitement avec le chauffeur de téléphone '.$tel.'.'
+                        'body' => 'En cours de traitement '.$tel.'.'
                         ]
                 ]
             ]);

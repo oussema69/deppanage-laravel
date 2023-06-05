@@ -3,6 +3,9 @@
 @section('content')
 <form method="POST" action="{{ route('chauffeurs.store') }}">
     @csrf
+    <div class="container">
+        <h1 class="text-center">Ajouter Chauffeur</h1>
+
     <div class="form-group">
         <label for="nom">Nom</label>
         <input type="text" name="nom" class="form-control @error('nom') is-invalid @enderror" id="nom"  required>
@@ -66,5 +69,5 @@
     </div>
     <button type="submit" class="btn btn-primary">Ajouter</button>
 </form>
-
+</div>
 @endsection
