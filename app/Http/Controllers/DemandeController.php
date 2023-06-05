@@ -114,7 +114,7 @@ class DemandeController extends Controller
         // Retrieve the demande and chauffeur based on the $demande and $chauffeur_id parameters
         $demande = Demande::findOrFail($demande);
         $chauffeur = Chauffeur::findOrFail($chauffeur_id);
-        $this->sendNotif1($demande->device_token,$chauffeur->tel);
+        $this->sendNotiftoClient($demande->device_token,$chauffeur->tel);
         $this->sendNotif($chauffeur->device_token);
 
         // Update the demande with the assigned chauffeur
